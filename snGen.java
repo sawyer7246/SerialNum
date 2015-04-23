@@ -77,8 +77,8 @@ public class snGen {
 				 no=1;//following part of letters  后面重置从1开始
 			}
 			 
-			 //如果数字位溢出，加到字母位
-			 char preAdd = (char) ((int)charArray[no-1]+1) ;//预先字母位加字符
+			 //number overflow then add to letters-part 如果数字位溢出，加到字母位
+			 char preAdd = (char) ((int)charArray[no-1]+1) ;//add letters firstly 预先字母位加字符
 			 
 			 //round 1 先判断是第几轮的字母
 			 if(first>= 65 && first <=90 ){
@@ -108,7 +108,7 @@ public class snGen {
 				 //pure numbers 纯数字，没加过字母
 				 charArray[0]='A';
 			 }
-			 //如果溢出都要进行数字位重置
+			 
 			 
 			 //loop set '0' between first number letter to the bottom one 先循环从倒数第一位到数字位之后填0
 			 for(int k=no ; k < charArray.length-1 ; k++){
