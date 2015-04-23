@@ -8,6 +8,18 @@ import org.apache.commons.lang.math.NumberUtils;
 public class snGen {
 
 	 
+	/**
+	Author:Sawyer Lee
+	createDate:2015-4-23
+
+
+	Serial Number Rules:
+	000001~999999->A00001~A99999->B00001~B99999
+	----->Z00001~Z99999->ZA0001~ZA9999
+	------->ZZZZZZ---> a00001~a99999....
+	**/
+
+
 	public static void main(String[] args) {
 		 
 		String testStr = "001";//you can define the length of this String 
@@ -68,11 +80,11 @@ public class snGen {
 			 //如果数字位溢出，加到字母位
 			 char preAdd = (char) ((int)charArray[no-1]+1) ;//预先字母位加字符
 			 
-			 //先判断是第几轮的字母
+			 //round 1 先判断是第几轮的字母
 			 if(first>= 65 && first <=90 ){
 				 //第一轮加字母 A-Z
 				 
-				 //如果发现字母下标溢出,即超过Z或者超过z
+				 //if the letters overflow , which means it's bigger then 'Z' 如果发现字母下标溢出,即超过Z或者超过Z
 				 if(preAdd>90){
 					 //第一轮字母溢出
 					 charArray[no] =  'A';
@@ -83,36 +95,36 @@ public class snGen {
 				 }
 				 
 			 }else if(first>= 97 && first <=122){
-				 //第二轮加字母 a-z
+				 //round2 第二轮加字母 a-z
 				 
 				 if(preAdd>122){
-					 //第二轮字母溢出
+					 //round 2 over flow
 					 charArray[no] =  'a';
 					 no++;
 					 }else{
 						 charArray[no-1]=preAdd ;
 					 }
 			 }else if(first>= 48 && first <=57){
-				 //纯数字，没加过字母
+				 //pure numbers 纯数字，没加过字母
 				 charArray[0]='A';
 			 }
 			 //如果溢出都要进行数字位重置
 			 
-			 //先循环从倒数第一位到数字位之后填0
+			 //loop set '0' between first number letter to the bottom one 先循环从倒数第一位到数字位之后填0
 			 for(int k=no ; k < charArray.length-1 ; k++){
 				 charArray[k]='0';
 			 }
 			 
-			 //最后一位设置1,如果只有只有一位溢出就不需要设置1
+			 //only contain one last num don need set '1' 最后一位设置1,如果只有只有一位溢出就不需要设置1
 			 if(no<charArray.length){
 				 charArray[charArray.length-1]='1';//最后一位设为1
 			 }
 			 
 		 }else{
-			 //数字位没有溢出
+			 //number-part not over flow 数字位没有溢出
 			 String numReturn=ObjectUtils.toString(num);
 			 
-			 //填充缺少的0进去
+			 //fill the empty pat with '0' 填充缺少的0进去
 			 if(ObjectUtils.toString(num).length() < numStr.length()){
 				 for(int m=0; m<numStr.length()-ObjectUtils.toString(num).length();m++){
 					 numReturn = "0"+numReturn;
@@ -122,30 +134,30 @@ public class snGen {
 		 }
 		 
 	 }else{
-		 //数字位为空，纯字母加减
+		 //number-part is null , pure letter  数字位为空，纯字母加减
 		 char preAdd = (char) (charArray[charArray.length-1]+1) ;//预先字母位加好字符
 		 
-		 //先判断是第几轮递增
+		 //round 1先判断是第几轮递增
 		 if(first>= 65 && first <=90 ){
 			 //第一轮,最后一个字母加
 			 
 			 if(preAdd>90){
-				 //边界条件，从第一轮加到第二轮
+				 //Boundary conditions: round 1 to round 2 边界条件，从第一轮加到第二轮
 				 charArray[0]='a';
 				 for(int k=1 ; k < charArray.length-1 ; k++){
 					 charArray[k]='0';
 				 	}
 				 charArray[charArray.length-1]='1';//最后一位设为1
 			 }else{
-					 charArray[charArray.length-1]=preAdd;//正常的加
+					 charArray[charArray.length-1]=preAdd;//normally add正常的加
 				 }
 		 }else if(first>= 97 && first <=122){
 			 //第二轮
 			 if(preAdd>122){
-				 //边界条件，从第二轮越界
+				  //Boundary conditions: round 2 to over-flow 边界条件，从第二轮越界
 				 throw  new RuntimeException("Voucher Number Over Flow !");
 			 }else{
-					 charArray[charArray.length-1]=preAdd;//正常的加
+					 charArray[charArray.length-1]=preAdd;//normally add 正常的加
 			 }
 		 }
 	 }
