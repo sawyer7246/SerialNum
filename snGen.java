@@ -11,6 +11,7 @@ public class snGen {
 	/**
 	Author:Sawyer Lee
 	createDate:2015-4-23
+	mail:1789199491@qq.com
 
 
 	Serial Number Rules:
@@ -22,13 +23,27 @@ public class snGen {
 
 	public static void main(String[] args) {
 		 
-		String testStr = "001";//you can define the length of this String 
-		 
+		String testStr = "zzZ00001";//you can define the length of initial String 
+		long start = System.currentTimeMillis();
+		int count=0;	 
+		for(;null!=testStr;){
+			testStr=voucherGen(testStr);	
+			count++;
+		} 
+		long totalTime = System.currentTimeMillis()-start;
+		System.out.println("Generate："+count+"");
+		System.out.println("Time："+totalTime+"ms");
+		BigDecimal speed = new BigDecimal(count/totalTime);
+		System.out.println("Average speed："+speed+" SN/ms");
+
+
+		/**
 		try{
-				iteratorStr(testStr);
+				iteratorStr(testStr);//may cause stack over flow
 		}catch(Exception e){
-				System.out.println("stop now");
+				System.out.println("stop now");// according to Effective Java ,ending iteration like this is not suggested.
 		}
+		**/
 	}
 
 	 public static String iteratorStr(String str) throws Exception{
@@ -155,7 +170,8 @@ public class snGen {
 			 //第二轮
 			 if(preAdd>122){
 				  //Boundary conditions: round 2 to over-flow 边界条件，从第二轮越界
-				 throw  new RuntimeException("Voucher Number Over Flow !");
+				 return null;
+				 //throw  new RuntimeException("Voucher Number Over Flow !");
 			 }else{
 					 charArray[charArray.length-1]=preAdd;//normally add 正常的加
 			 }
