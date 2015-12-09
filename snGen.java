@@ -46,11 +46,6 @@ public class snGen {
 		**/
 	}
 
-	 public static String iteratorStr(String str) throws Exception{
-		System.out.println(str);
-		String returnStr= voucherGen(str);
-		return iteratorStr(returnStr);
-	}
 	
 
 	public static String voucherGen(String voucherNo) throws  Exception {
